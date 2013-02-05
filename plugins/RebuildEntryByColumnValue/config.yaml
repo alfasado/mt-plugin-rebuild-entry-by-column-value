@@ -1,7 +1,7 @@
 name: RebuildEntryByColumnValue
 id:   RebuildEntryByColumnValue
 key:  rebuildentrybycolumnvalue
-version: 0.1
+version: 0.2
 author_link: http://alfasado.net/
 author_name: Alfasado Inc.
 description: Rebuild entry by entry's column value.
@@ -11,8 +11,11 @@ tags:
                 sub {
                         my ( $ctx, $args, $cond ) = @_;
                         my $app = MT->instance;
+                        return if ref( $app ) !~ /^MT::App/;
+                        my $mode = $app->mode;
+                        return if ( $mode =~ /preview/ );
                         my $blog_id = $args->{ blog_id };
-                        if (! $blog_id || $blog_id ne 'all' ) {
+                        if (! $blog_id && $blog_id ne 'all' ) {
                             $blog_id = $app->blog->id;
                         }
                         my $column = $args->{ column } || 'title';
