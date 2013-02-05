@@ -15,8 +15,11 @@ tags:
                         my $mode = $app->mode;
                         return if ( $mode =~ /preview/ );
                         my $blog_id = $args->{ blog_id };
-                        if (! $blog_id && $blog_id ne 'all' ) {
+                        if (! $blog_id ) {
                             $blog_id = $app->blog->id;
+                        }
+                        if ( $blog_id eq 'all' ) {
+                            $blog_id = undef;
                         }
                         my $column = $args->{ column } || 'title';
                         my $class = $args->{ class } || 'entry';
